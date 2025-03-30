@@ -2,9 +2,10 @@
  * Created by Vladdy | 30.03.2025
    * Last Updated: 30.03.2025
    * Program: PhotoOpener - opens local images in the browser
-   * Version: 1.0
+   * Version: 1.1
    * Status: Started
    * Could Be Improved: Yes
+   * GitHub Repository: https://github.com/Vladikusss/PhotoOpener
  */
 
 using System;
@@ -57,6 +58,15 @@ public class HttpServer
     }
 
     private static void HandleRequest(HttpListenerContext context)
+    {
+        // Extract requested file path
+        string requestedFile = context.Request.Url.AbsolutePath.Substring(1);
+        Console.WriteLine("--[INFO]-- Requested File: " + requestedFile);
+        
+        SendFile(context, requestedFile);
+    }
+
+    private static void SendFile(HttpListenerContext context, string requestedFile)
     {
         
     }
