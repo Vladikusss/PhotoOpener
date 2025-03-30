@@ -1,0 +1,35 @@
+# Ignore Visual Studio/JetBrains Rider specific files
+.vs/
+.idea/
+*.suo
+*.user
+*.dbmdl
+*.sln.docstates
+
+# Ignore build output
+bin/
+obj/
+out/
+*.dll
+*.exe
+*.pdb
+
+# Ignore logs and debugging files
+*.log
+logs/
+*.cache
+*.pid
+
+# Ignore environment settings
+.env
+secrets.json
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore user-specific settings
+*.swp
+*.bak
+*.tmp
+*.orig
