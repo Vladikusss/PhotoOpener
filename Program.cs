@@ -2,8 +2,8 @@
  * Created by Vladdy | 30.03.2025
    * Last Updated: 30.03.2025
    * Program: PhotoOpener - opens local images in the browser
-   * Version: 1.1
-   * Status: Started
+   * Version: 1.2
+   * Status: Completed
    * Could Be Improved: Yes
    * GitHub Repository: https://github.com/Vladikusss/PhotoOpener
  */
@@ -31,7 +31,7 @@ public class HttpServer
         Console.WriteLine("Hello, World!");
         
         ListenerObj = new HttpListener(); // Initialisation of a listener object
-        ListenerObj.Prefixes.Add("http://127.0.0.1:8080/"); // Local Host allocation
+        ListenerObj.Prefixes.Add("YOUR LOCAL HOST"); // Local Host allocation
         try
         {
 
@@ -60,14 +60,54 @@ public class HttpServer
     private static void HandleRequest(HttpListenerContext context)
     {
         // Extract requested file path
-        string requestedFile = context.Request.Url.AbsolutePath.Substring(1);
-        Console.WriteLine("--[INFO]-- Requested File: " + requestedFile);
+        string requestedFile = context.Request.Url.LocalPath.TrimStart('/');
+        
+        requestedFile = Path.GetFileName(requestedFile);
         
         SendFile(context, requestedFile);
     }
 
     private static void SendFile(HttpListenerContext context, string requestedFile)
     {
+        Console.WriteLine("--[INFO]-- Requested File: " + requestedFile);
         
+        string directory = "YourPath";
+        string fileName = requestedFile;
+        string filePath = Path.Combine(directory, fileName);
+        
+        Console.WriteLine("--[INFO]-- File Path: " + filePath);
+
+        if (File.Exists(filePath))
+        {
+            try
+            {
+                Console.WriteLine("--[INFO]-- File exists: " + filePath);
+                context.Response.ContentType = "image/jpg"; // Specify file type
+                // Number of bytes in the edata included in response
+                context.Response.ContentLength64 = new FileInfo(filePath).Length;
+
+                using (FileStream file = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    // Copies file data into an outputable stream that is sent to Response object to client
+                    file.CopyTo(context.Response.OutputStream);
+                }
+
+                context.Response.StatusCode = (int)HttpStatusCode.OK;
+                context.Response.OutputStream.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("--[ERROR]-- " + ex.Message);
+                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                context.Response.Close();
+            }
+            
+        }
+        else
+        { // File is not found 
+            Console.WriteLine("--[ERROR]-- File was not found, sending 404.");
+            context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+            context.Response.Close();
+        }
     }
 }
