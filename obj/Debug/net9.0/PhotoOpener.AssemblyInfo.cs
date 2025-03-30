@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PhotoOpener")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+da4a423e59633cc60a99ee3f0656f601780585ee")]
 [assembly: System.Reflection.AssemblyProductAttribute("PhotoOpener")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PhotoOpener")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
